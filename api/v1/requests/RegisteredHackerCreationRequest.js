@@ -23,7 +23,6 @@ var validations = {
 	'tshirtSize': ['string', registration.verifyTshirtSize]
 };
 
-// usable whenever a request is made to create a Hacker
 function RegisteredHackerCreationRequest(parameters) {
 	Request.call(this, parameters);
 

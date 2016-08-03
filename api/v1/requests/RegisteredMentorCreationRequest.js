@@ -8,7 +8,6 @@ var validations = {
 	'organization': ['string', 'between:0:256']
 };
 
-// usable whenever a request is made to create a Hacker
 function RegisteredMentorCreationRequest(parameters) {
 	Request.call(this, parameters);
 

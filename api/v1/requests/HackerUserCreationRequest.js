@@ -10,7 +10,6 @@ var validations = {
 		message: "The confirmed password must match the password" }]
 };
 
-// usable whenever a request is made to create a Hacker
 function HackerUserCreationRequest(parameters) {
 	Request.call(this, parameters);
 

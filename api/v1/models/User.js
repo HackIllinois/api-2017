@@ -15,6 +15,8 @@ var User = Model.extend({
 	idAttribute: 'id',
 	hasTimestamps: ['created', 'updated'],
 	validations: {
+	  firstName: ['required', 'string', 'between:0:256'],
+	  lastName: ['required', 'string', 'between:0:256'],
 		email: ['required', 'email'],
 		password: ['required', 'string', 'minLength:8'],
 		role: ['required', 'string', roles.verifyRole]
