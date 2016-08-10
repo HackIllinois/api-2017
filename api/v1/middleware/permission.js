@@ -12,7 +12,7 @@ module.exports = function(allowed, isOwner) {
 		if (!req.auth) {
 			// there is no auth information, so the requester cannot be allowed
 			return next(new errors.UnauthorizedError());
-		} if (isOwner && !isOwner(req)) {
+		} if (isOwner && !isOwner(req) && !_.includes(allowed, req.auth.role)) {
 			// the endpoint defined a method for determining whether the
 			// requester owns the resource, but this was not true
 			return next(new errors.UnauthorizedError());
