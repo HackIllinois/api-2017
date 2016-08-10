@@ -29,7 +29,8 @@ Model.transaction = function (callback) {
  */
 Model.findById = function (id) {
 	var queryWhere = {};
-	queryWhere[this.idAttribute] = id;
+	// queryWhere[this.idAttribute] = id; // This fails -- "this" does not have idAttribute, only Model instances do
+  queryWhere['id'] = id;
 	return this.collection().query({ where: queryWhere }).fetchOne();
 };
 
