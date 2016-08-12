@@ -15,7 +15,7 @@ var INITIATIVES = ['SOFTWARE', 'HARDWARE', 'OPEN_SOURCE'];
  * @throws TypeError when the size is invalid
  */
 module.exports.verifyTshirtSize = function (size) {
-	if (!_.includes(TSHIRT_SIZES, size);) {
+	if (!_.includes(TSHIRT_SIZES, size)) {
 		throw new TypeError(size + " is not a valid size");
 	}
 
@@ -23,7 +23,7 @@ module.exports.verifyTshirtSize = function (size) {
 };
 
 module.exports.verifyGender = function (gender) {
- if (!_.includes(GENDERS, gender);) {
+ if (!_.includes(GENDERS, gender)) {
    throw new TypeError(gender + " is not a valid gender");
  }
 
@@ -31,7 +31,7 @@ module.exports.verifyGender = function (gender) {
 };
 
 module.exports.verifyDiet = function (diet) {
- if (!_.includes(DIETS, diet);) {
+ if (!_.includes(DIETS, diet)) {
    throw new TypeError(diet + " is not a valid diet");
  }
 
@@ -39,7 +39,7 @@ module.exports.verifyDiet = function (diet) {
 };
 
 module.exports.verifyProfessionalInterest = function (interest) {
- if (!_.includes(PROFESSIONAL_INTERESTS, interest);) {
+ if (!_.includes(PROFESSIONAL_INTERESTS, interest)) {
    throw new TypeError(interest + " is not a valid professional interest");
  }
 
@@ -47,7 +47,7 @@ module.exports.verifyProfessionalInterest = function (interest) {
 };
 
 module.exports.verifyHackathonAttendance = function (attendance) {
- if (!_.includes(HACKATHON_ATTENDANCE_OPTIONS, attendance);) {
+ if (!_.includes(HACKATHON_ATTENDANCE_OPTIONS, attendance)) {
    throw new TypeError(attendance + " is not a valid attendance option");
  }
 
@@ -56,8 +56,9 @@ module.exports.verifyHackathonAttendance = function (attendance) {
 
 
 module.exports.verifyInitiatives= function (initiatives) {
-  for(var initiative in initiatives){
-    if (!_.includes(INITIATIVES, initiative);) {
+  for(var i = 0; i < initiatives.length; i++){
+		var initiative = initiatives[i];
+    if (!_.includes(INITIATIVES, initiative)) {
      throw new TypeError(initiative + " is not a valid initiative");
     }
   }

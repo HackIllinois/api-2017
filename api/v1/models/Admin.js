@@ -13,4 +13,12 @@ var Admin = Model.extend({
 	}
 });
 
+/**
+ * Serializes this Admin
+ * @return {Object} the serialized form of this Admin
+ */
+Admin.prototype.toJSON = function () {
+	return _.omit(this.attributes, ['userId']);
+};
+
 module.exports = Admin;

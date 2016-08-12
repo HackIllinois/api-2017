@@ -1,3 +1,6 @@
+var Checkit = require('checkit');
+var Promise = require('bluebird');
+
 var Admin = require('../models/Admin');
 var Mentor = require('../models/Mentor');
 var Sponsor = require('../models/Sponsor');
@@ -5,7 +8,10 @@ var Staff = require('../models/Staff');
 var Volunteer = require('../models/Volunteer');
 var Hacker = require('../models/Hacker');
 
-var roles = require('../utils/roles');
+var utils = require('../utils');
+var errors = require('../errors');
+var roles = utils.roles;
+
 var models = {};
 
 models[roles.ADMIN] =  Admin;
@@ -17,86 +23,88 @@ models[roles.HACKER] =  Hacker;
 
 
 /**
- * Finds a registration by its relational user
- * @param  {Object} user the user to query
- * @return {Object} the possible (one) matching registration, or undefined
- */
+* Finds a registration by its relational user
+* @param  {Object} user the user to query
+* @return {Object} the possible (one) matching registration, or undefined
+*/
 function _findRegistrationByUser (user) {
 	if (user) {
-    var model = models[user.attributes.role];
-		return model.query().where('user_id', user.attributes.id).fetchOne();
+		var model = models[user.attributes.role];
+		return model.query('where', 'user_id', '=', user.attributes.id).fetch();
 	}
 
 	return Promise.resolve(undefined);
 }
 
 /**
- * Finds a registration by the given user
- * @param  {Object} user the user to query
- * @return {Promise} resolving to an instance of the associated registration model
- * @throws {NotFoundError} when the requested registration cannot be found
- */
-module.exports.findRegistrationByUser(user) = function(user){
-  var model = models[user.attributes.role];
+* Finds a registration by the given user
+* @param  {Object} user the user to query
+* @return {Promise} resolving to an instance of the associated registration model
+* @throws {NotFoundError} when the requested registration cannot be found
+*/
+module.exports.findRegistrationByUser = function(user){
+	var model = models[user.attributes.role];
 	return _findRegistrationByUser(user)
-		.then(function (result) {
-			if (!result) {
-				var message = "A registration for the given user cannot be found";
-				var source = "user";
-				throw new errors.NotFoundError(message, source);
-			}
+	.then(function (result) {
+		if (!result) {
+			var message = "A registration for the given user cannot be found";
+			var source = "user";
+			throw new errors.NotFoundError(message, source);
+		}
 
-			return Promise.resolve(result);
-		});
+		return Promise.resolve(result);
+	});
 }
 
 /**
- * Creates a registration for the supplied user.
- * @param  {Object} user the user being registered
- * @param  {Object} registration the object containing the registration parameters
- * @return {Promise} resolving to the newly-created registration instance
- * @throws InvalidParameterError when a registration exists with the specified user
- */
+* Creates a registration for the supplied user.
+* @param  {Object} user the user being registered
+* @param  {Object} registration the object containing the registration parameters
+* @return {Promise} resolving to the newly-created registration instance
+* @throws InvalidParameterError when a registration exists with the specified user
+*/
 module.exports.registerUser = function(user, registration){
-  var model = models[user.attributes.role];
-  model.forge(registration);
-  model
-		.validate()
-		.catch(Checkit.Error, utils.errors.handleValidationError)
-		.then(function (validated) {
-			return _findRegistrationByUser(user);
-		})
-		.then(function (result) {
-			if (result) {
-				var message = "A registration for the given user already exists";
-				var source = "user";
-				throw new errors.InvalidParameterError(message, source);
-			}
-		})
-		.then(function () {
-			return model.save();
-		})
-		.then(function (registration) {
-			return Promise.resolve(registration);
-		});
+	registration["userId"] = user.attributes.id;
+	var model = models[user.attributes.role];
+	var registrationInstance = model.forge(registration);
+	registrationInstance
+	.validate()
+	.catch(Checkit.Error, utils.errors.handleValidationError)
+	.then(function (validated) {
+		return _findRegistrationByUser(user);
+	})
+	.then(function (result) {
+		if (result) {
+			var message = "A registration for the given user already exists";
+			var source = "user";
+			throw new errors.InvalidParameterError(message, source);
+		}
+		return registrationInstance;
+	})
+	.then(function () {
+		return registrationInstance.save();
+	})
+	.then(function(result) {
+		return Promise.resolve(result);
+	});
 }
 
 
 /**
- * Updates an existing registration instance with the registration passed.
- * @param  {Object} registrationInstance the registration being updated
- * @param  {Object} registration the object containing the registration parameters
- * @return {Promise} resolving to the updated registration instance
- */
+* Updates an existing registration instance with the registration passed.
+* @param  {Object} registrationInstance the registration being updated
+* @param  {Object} registration the object containing the registration parameters
+* @return {Promise} resolving to the updated registration instance
+*/
 module.exports.updateRegistration = function(registrationInstance, registration){
-  registrationInstance.set(registration);
-  registrationInstance
-		.validate()
-		.catch(Checkit.Error, utils.errors.handleValidationError)
-		.then(function (validated) {
-      return model.save();
-		})
-		.then(function (registration) {
-			return Promise.resolve(registration);
-		});
+	registrationInstance.set(registration);
+	registrationInstance
+	.validate()
+	.catch(Checkit.Error, utils.errors.handleValidationError)
+	.then(function (validated) {
+		return registrationInstance.save();
+	})
+	.then(function (result) {
+		return Promise.resolve(result);
+	});
 }

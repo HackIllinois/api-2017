@@ -42,10 +42,10 @@ function _findUserById (id) {
  * @return {Promise} resolving to the newly-created user
  * @throws InvalidParameterError when a user exists with the specified email
  */
-module.exports.createUser = function (email, password, role) {
+module.exports.createUser = function (firstName, lastName, email, password, role) {
 	email = email.toLowerCase();
 	password = (password) ? password : utils.crypto.generatePassword();
-	var user = User.forge({ email: email, password: password, role: role });
+	var user = User.forge({ firstName: firstName, lastName: lastName, email: email, password: password, role: role });
 
 	// TODO: send user an email requiring a password reset when
 	// the password is automatically generated

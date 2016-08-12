@@ -14,4 +14,12 @@ var Sponsor = Model.extend({
 	}
 });
 
+/**
+ * Serializes this Sponsor
+ * @return {Object} the serialized form of this Sponsor
+ */
+Sponsor.prototype.toJSON = function () {
+	return _.omit(this.attributes, ['userId']);
+};
+
 module.exports = Sponsor;

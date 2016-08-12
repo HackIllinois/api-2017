@@ -18,7 +18,7 @@ function isRequester(req) {
 
 function createHackerUser (req, res, next) {
 	services.UserService
-		.createUser(req.body.email, req.body.password, 'HACKER')
+		.createUser(req.body.firstName, req.body.lastName, req.body.email, req.body.password, 'HACKER')
 		.then(function (user) {
 			return services.AuthService.issueForUser(user);
 		})
@@ -42,7 +42,7 @@ function createAccreditedUser (req, res, next) {
 		.canCreateUser(requesterRole, req.body.role)
 		.then(function (verified) {
 			return services.UserService
-				.createUser(req.body.email, req.body.password, req.body.role);
+				.createUser(req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.role);
 		})
 		.then(function (user) {
 			res.body = user.toJSON();

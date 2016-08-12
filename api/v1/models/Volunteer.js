@@ -13,4 +13,12 @@ var Volunteer = Model.extend({
 	}
 });
 
+/**
+ * Serializes this Volunteer
+ * @return {Object} the serialized form of this Volunteer
+ */
+Volunteer.prototype.toJSON = function () {
+	return _.omit(this.attributes, ['userId']);
+};
+
 module.exports = Volunteer;

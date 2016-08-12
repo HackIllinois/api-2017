@@ -14,4 +14,12 @@ var Mentor = Model.extend({
 	}
 });
 
+/**
+ * Serializes this Mentor
+ * @return {Object} the serialized form of this Mentor
+ */
+Mentor.prototype.toJSON = function () {
+	return _.omit(this.attributes, ['userId']);
+};
+
 module.exports = Mentor;

@@ -5,7 +5,7 @@ var registration = require('../utils/registration');
 var required = ['tshirtSize', 'organization'];
 var validations = {
 	'tshirtSize': ['string', registration.verifyTshirtSize],
-	'organization': ['string', 'between:0:256']
+	'organization': ['string', 'maxLength:256']
 };
 
 function RegisteredSponsorCreationRequest(parameters) {

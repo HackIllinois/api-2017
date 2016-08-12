@@ -13,4 +13,12 @@ var Staff = Model.extend({
 	}
 });
 
+/**
+ * Serializes this Staff
+ * @return {Object} the serialized form of this Staff
+ */
+Staff.prototype.toJSON = function () {
+	return _.omit(this.attributes, ['userId']);
+};
+
 module.exports = Staff;
