@@ -1,6 +1,9 @@
 /* jshint esversion: 6 */
 
 var registration = require('../utils/registration');
+var _ = require('lodash');
+
+var OMITTED_ATTRIBUTES = [];
 
 var Model = require('./Model');
 var Mentor = Model.extend({
@@ -19,7 +22,7 @@ var Mentor = Model.extend({
  * @return {Object} the serialized form of this Mentor
  */
 Mentor.prototype.toJSON = function () {
-	return _.omit(this.attributes, ['userId']);
+	return _.omit(this.attributes, OMITTED_ATTRIBUTES);
 };
 
 module.exports = Mentor;

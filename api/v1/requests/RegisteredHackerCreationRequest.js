@@ -7,7 +7,7 @@ var validations = {
 	'age': ['number', 'max:100', 'min:13'],
 	'gender': ['string', registration.verifyGender],
 	'school': ['string', 'maxLength:256'],
-	'graduationYear': ['number', 'max:2020', 'min:2017'],
+	'graduationYear': ['number', 'between:2016:2021'],
 	'major': ['string', 'maxLength:256'],
 	'diet': ['string', registration.verifyDiet],
 	'professionalInterest': ['string', registration.verifyProfessionalInterest],

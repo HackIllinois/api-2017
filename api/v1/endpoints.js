@@ -12,22 +12,28 @@ endpoints['/auth'] = {
 	POST: requests.AuthTokenRequest
 };
 endpoints['/registration/admin'] = {
-	POST: requests.RegisteredAdminCreationRequest
+	POST: requests.RegisteredAdminCreationRequest,
+	PUT: requests.RegisteredAdminCreationRequest
 };
 endpoints['/registration/hacker'] = {
-	POST: requests.RegisteredHackerCreationRequest
+	POST: requests.RegisteredHackerCreationRequest,
+	PUT: requests.RegisteredHackerCreationRequest
 };
 endpoints['/registration/mentor'] = {
-	POST: requests.RegisteredMentorCreationRequest
+	POST: requests.RegisteredMentorCreationRequest,
+	PUT: requests.RegisteredMentorCreationRequest
 };
 endpoints['/registration/sponsor'] = {
-	POST: requests.RegisteredSponsorCreationRequest
+	POST: requests.RegisteredSponsorCreationRequest,
+	PUT: requests.RegisteredSponsorCreationRequest
 };
 endpoints['/registration/staff'] = {
-	POST: requests.RegisteredStaffCreationRequest
+	POST: requests.RegisteredStaffCreationRequest,
+	PUT: requests.RegisteredStaffCreationRequest
 };
 endpoints['/registration/volunteer'] = {
-	POST: requests.RegisteredVolunteerCreationRequest
+	POST: requests.RegisteredVolunteerCreationRequest,
+	PUT: requests.RegisteredVolunteerCreationRequest
 };
 
 module.exports = endpoints;

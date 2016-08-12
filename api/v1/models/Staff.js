@@ -1,6 +1,9 @@
 /* jshint esversion: 6 */
 
 var registration = require('../utils/registration');
+var _ = require('lodash');
+
+var OMITTED_ATTRIBUTES = [];
 
 var Model = require('./Model');
 var Staff = Model.extend({
@@ -18,7 +21,7 @@ var Staff = Model.extend({
  * @return {Object} the serialized form of this Staff
  */
 Staff.prototype.toJSON = function () {
-	return _.omit(this.attributes, ['userId']);
+	return _.omit(this.attributes, OMITTED_ATTRIBUTES);
 };
 
 module.exports = Staff;

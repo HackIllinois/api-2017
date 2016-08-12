@@ -67,7 +67,7 @@ module.exports.registerUser = function(user, registration){
 	registration["userId"] = user.attributes.id;
 	var model = models[user.attributes.role];
 	var registrationInstance = model.forge(registration);
-	registrationInstance
+	return registrationInstance
 	.validate()
 	.catch(Checkit.Error, utils.errors.handleValidationError)
 	.then(function (validated) {
@@ -98,7 +98,7 @@ module.exports.registerUser = function(user, registration){
 */
 module.exports.updateRegistration = function(registrationInstance, registration){
 	registrationInstance.set(registration);
-	registrationInstance
+	return registrationInstance
 	.validate()
 	.catch(Checkit.Error, utils.errors.handleValidationError)
 	.then(function (validated) {

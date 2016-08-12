@@ -1,6 +1,9 @@
 /* jshint esversion: 6 */
 
 var registration = require('../utils/registration');
+var _ = require('lodash');
+
+var OMITTED_ATTRIBUTES = [];
 
 var Model = require('./Model');
 var Hacker = Model.extend({
@@ -12,7 +15,7 @@ var Hacker = Model.extend({
 		age: ['number', 'max:100', 'min:13'],
 		gender: ['string', registration.verifyGender],
 		school: ['string', 'maxLength:256'],
-		graduationYear: ['number', 'max:2020', 'min:2017'],
+		graduationYear: ['number', 'between:2016:2021'],
 		major: ['string', 'maxLength:256'],
 		diet: ['string', registration.verifyDiet],
 		professionalInterest: ['string', registration.verifyProfessionalInterest],
@@ -34,7 +37,7 @@ var Hacker = Model.extend({
  * @return {Object} the serialized form of this Hacker
  */
 Hacker.prototype.toJSON = function () {
-	return _.omit(this.attributes, ['userId']);
+	return _.omit(this.attributes, OMITTED_ATTRIBUTES);
 };
 
 module.exports = Hacker;
