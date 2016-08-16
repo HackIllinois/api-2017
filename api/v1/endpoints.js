@@ -35,5 +35,9 @@ endpoints['/registration/volunteer'] = {
 	POST: requests.RegisteredVolunteerCreationRequest,
 	PUT: requests.RegisteredVolunteerCreationRequest
 };
+endpoints['/team'] = {
+	POST: requests.TeamRequest,
+	PUT: requests.TeamRequest
+};
 
 module.exports = endpoints;

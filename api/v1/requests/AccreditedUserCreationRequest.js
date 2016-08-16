@@ -3,8 +3,8 @@ var Request = require('./Request');
 
 var required = ['firstName', 'lastName', 'email', 'role'];
 var validations = {
-	'firstName': ['string', 'maxLength:256'],
-	'lastName': ['string', 'maxLength:256'],
+	'firstName': ['string', 'maxLength:255'],
+	'lastName': ['string', 'maxLength:255'],
 	'email': ['email'],
 	'role': ['string', roles.verifyRole]
 };

@@ -27,7 +27,9 @@ CREATE TABLE `teams_users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `team_id` INT UNSIGNED NOT NULL,
   `user_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (user_id) REFERENCES `users`(id),
+  FOREIGN KEY (team_id) REFERENCES `teams`(id)
 );
 
 CREATE TABLE `admins`(

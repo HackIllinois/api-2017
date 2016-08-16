@@ -9,5 +9,4 @@ DROP TABLE `teams`;
 DROP TABLE `organizations`;
 ALTER TABLE `users`
 	DROP COLUMN `first_name`,
-	DROP COLUMN `last_name`,
-	DROP COLUMN `tshirt_size`;
+	DROP COLUMN `last_name`;

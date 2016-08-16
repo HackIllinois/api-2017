@@ -7,5 +7,6 @@ module.exports = {
 	RegisteredMentorCreationRequest: require('./RegisteredMentorCreationRequest'),
 	RegisteredSponsorCreationRequest: require('./RegisteredSponsorCreationRequest'),
 	RegisteredStaffCreationRequest: require('./RegisteredStaffCreationRequest'),
-	RegisteredVolunteerCreationRequest: require('./RegisteredVolunteerCreationRequest')
+	RegisteredVolunteerCreationRequest: require('./RegisteredVolunteerCreationRequest'),
+	TeamRequest: require('./TeamRequest')
 };

@@ -2,8 +2,8 @@ var Request = require('./Request');
 
 var required = ['firstName', 'lastName', 'email', 'password', 'confirmedPassword'];
 var validations = {
-	'firstName': ['string', 'maxLength:256'],
-	'lastName': ['string', 'maxLength:256'],
+	'firstName': ['string', 'maxLength:255'],
+	'lastName': ['string', 'maxLength:255'],
 	'email': ['email'],
 	'password': ['string', 'minLength:8'],
 	'confirmedPassword': [{ rule: 'matchesField:password',

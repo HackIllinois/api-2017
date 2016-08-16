@@ -14,7 +14,7 @@ var utils = require('./v1/utils/');
 User.query().where('Email', config.superuser.email).select('id')
 	.then(function (results) {
 		if (!results.length) {
-			var superuser = User.forge({ email: config.superuser.email, role: utils.roles.SUPERUSER});
+			var superuser = User.forge({ firstName: "Super", lastName:"User", email: config.superuser.email, role: utils.roles.SUPERUSER});
 			return superuser.setPassword(config.superuser.password);
 		}
 

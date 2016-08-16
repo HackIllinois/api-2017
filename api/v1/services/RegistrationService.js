@@ -25,7 +25,7 @@ models[roles.HACKER] =  Hacker;
 /**
 * Finds a registration by its relational user
 * @param  {Object} user the user to query
-* @return {Object} the possible (one) matching registration, or undefined
+* @return {Promise} the possible (one) matching registration, or undefined
 */
 function _findRegistrationByUser (user) {
 	if (user) {

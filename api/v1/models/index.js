@@ -5,5 +5,7 @@ module.exports = {
 	Mentor: require('./Mentor'),
 	Sponsor: require('./Sponsor'),
 	Staff: require('./Staff'),
-	Volunteer: require('./Volunteer')
+	Volunteer: require('./Volunteer'),
+	Team: require('./Team'),
+	TeamsUser: require('./TeamsUser')
 };

@@ -23,6 +23,7 @@ var KNEX_CONFIG = {
 function DatabaseManager() {
 	this._knex = Knex(KNEX_CONFIG);
 	this._bookshelf = Bookshelf(this._knex);
+	this._bookshelf.plugin('registry');
 }
 
 DatabaseManager.prototype.constructor = DatabaseManager;

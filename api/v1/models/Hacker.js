@@ -14,20 +14,20 @@ var Hacker = Model.extend({
 		userId: ['required', 'integer'],
 		age: ['number', 'max:100', 'min:13'],
 		gender: ['string', registration.verifyGender],
-		school: ['string', 'maxLength:256'],
+		school: ['string', 'maxLength:255'],
 		graduationYear: ['number', 'between:2016:2021'],
-		major: ['string', 'maxLength:256'],
+		major: ['string', 'maxLength:255'],
 		diet: ['string', registration.verifyDiet],
 		professionalInterest: ['string', registration.verifyProfessionalInterest],
-		linkedinUrl: ['url', 'maxLength:256'],
-		githubUrl: ['url', 'maxLength:256'],
-		siteUrl: ['url', 'maxLength:256'],
+		linkedinUrl: ['url', 'maxLength:255'],
+		githubUrl: ['url', 'maxLength:255'],
+		siteUrl: ['url', 'maxLength:255'],
 	  hackathonAttendance: ['string', registration.verifyHackathonAttendance],
 	  //Assuming initiatives will be passed as an array of strings
 	  initiatives: ['array', registration.verifyInitiatives],
-	  hardwareDesired: ['string', 'maxLength:256'],
-	  openSourceInterests: ['string', 'maxLength:256'],
-	  extraInformation: ['string', 'maxLength:256'],
+	  hardwareDesired: ['string', 'maxLength:255'],
+	  openSourceInterests: ['string', 'maxLength:255'],
+	  extraInformation: ['string', 'maxLength:255'],
 		tshirtSize: ['string', registration.verifyTshirtSize]
 	}
 });

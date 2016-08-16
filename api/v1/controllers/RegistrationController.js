@@ -62,6 +62,11 @@ function getRegistration(req, res, next) {
   });
 }
 
+/**
+ * Determines whether or not the requester is registering for the correct role.
+ * @throws UnauthorizedError when user is attempting to register for a role
+ * other than their own.
+ */
 function roleMatchesUser(req, res, next) {
   if(req.auth.role !== req.params.role.toUpperCase()){
     return next(new errors.UnauthorizedError());
@@ -77,4 +82,5 @@ router.put('/:role', roleMatchesUser, updateRegistration);
 
 module.exports.registerUser = registerUser;
 module.exports.updateRegistration = updateRegistration;
+module.exports.getRegistration = getRegistration;
 module.exports.router = router;
