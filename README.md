@@ -46,6 +46,7 @@ The following environment variables can be used to configure the API for your sy
 | HACKILLINOIS_PORT | Any valid port number | Overrides default port (8080) |
 | HACKILLINOIS_SUPERUSER_EMAIL | Any valid email | Overrides the default superuser email ('admin@example.com') |
 | HACKILLINOIS_SUPERUSER_PASSWORD | Any string | Overrides the default superuser password ('ABCD1234!') |
+| HACKILLINOIS_MAIL_KEY | Any string | Sets the mail service API key |
 | LOCAL_MYSQL_USERNAME | Any string | Overrides default MySQL username ('root') |
 | LOCAL_MYSQL_PASSWORD | Any string | Overrides default MySQL password ('') |
 | LOCAL_MYSQL_HOST | Any valid URI | Overrides default MySQL host ('127.0.0.1') |
@@ -55,6 +56,18 @@ You should set `NODE_ENV` to `development`, as this variable is required. The AP
 will exit with an unsuccessful error code if it finds that this variable is missing.
 To save time, you might add this variable to your PATH, or to a `bash_profile` as
 an export.
+
+Developers contributing to a feature that involves email transmissions
+will need to set the `HACKILLINOIS_MAIL_KEY` to a valid SparkPost API key.
+
+Developers contributing to a feature that involves any AWS
+products will also need to set up an
+[AWS shared credentials file](http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html)
+with the profile `hackillinois-api`.
+
+Note that this API is targeted for hosting via AWS, so any AWS-specific settings
+(e.g. those in IAM roles) are used by this API before settings in any environment
+variables or other credentials files.
 
 ## Installation
 

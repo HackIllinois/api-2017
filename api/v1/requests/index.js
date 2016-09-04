@@ -8,5 +8,8 @@ module.exports = {
 	RegisteredSponsorCreationRequest: require('./RegisteredSponsorCreationRequest'),
 	RegisteredStaffCreationRequest: require('./RegisteredStaffCreationRequest'),
 	RegisteredVolunteerCreationRequest: require('./RegisteredVolunteerCreationRequest'),
-	TeamRequest: require('./TeamRequest')
+	ResetTokenRequest: require('./ResetTokenRequest'),
+	ResetPasswordRequest: require('./ResetPasswordRequest'),
+	TeamRequest: require('./TeamRequest'),
+	UploadRequest: require('./UploadRequest')
 };

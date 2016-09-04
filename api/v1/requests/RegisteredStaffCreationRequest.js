@@ -2,16 +2,16 @@ var Request = require('./Request');
 var registration = require('../utils/registration');
 
 
-var required = ['tshirtSize'];
-var validations = {
+var bodyRequired = ['tshirtSize'];
+var bodyValidations = {
 	'tshirtSize': ['string', registration.verifyTshirtSize]
 };
 
-function RegisteredStaffCreationRequest(parameters) {
-	Request.call(this, parameters);
+function RegisteredStaffCreationRequest(headers, body) {
+	Request.call(this, headers, body);
 
-	this.required = required;
-	this.validations = validations;
+	this.bodyRequired = bodyRequired;
+	this.bodyValidations = bodyValidations;
 }
 
 RegisteredStaffCreationRequest.prototype = Object.create(Request.prototype);

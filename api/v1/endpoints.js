@@ -2,13 +2,19 @@ var requests = require('./requests');
 
 var endpoints = {};
 
-endpoints['/user'] = {
+endpoints['/v1/user'] = {
 	POST: requests.HackerUserCreationRequest
 };
-endpoints['/user/accredited'] = {
+endpoints['/v1/user/accredited'] = {
 	POST: requests.AccreditedUserCreationRequest
 };
-endpoints['/auth'] = {
+endpoints['/v1/user/reset'] = {
+	POST: requests.ResetTokenRequest
+};
+endpoints['/v1/auth/reset'] = {
+	POST: requests.ResetPasswordRequest
+};
+endpoints['/v1/auth'] = {
 	POST: requests.AuthTokenRequest
 };
 endpoints['/registration/admin'] = {
@@ -38,6 +44,12 @@ endpoints['/registration/volunteer'] = {
 endpoints['/team'] = {
 	POST: requests.TeamRequest,
 	PUT: requests.TeamRequest
+};
+endpoints['/v1/upload/resume'] = {
+	POST: requests.UploadRequest
+};
+endpoints['/v1/upload/resume/:id'] = {
+	PUT: requests.UploadRequest
 };
 
 module.exports = endpoints;

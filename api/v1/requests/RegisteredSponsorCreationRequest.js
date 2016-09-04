@@ -2,17 +2,17 @@ var Request = require('./Request');
 var registration = require('../utils/registration');
 
 
-var required = ['tshirtSize', 'organization'];
-var validations = {
+var bodyRequired = ['tshirtSize', 'organization'];
+var bodyValidations = {
 	'tshirtSize': ['string', registration.verifyTshirtSize],
 	'organization': ['string', 'maxLength:255']
 };
 
-function RegisteredSponsorCreationRequest(parameters) {
-	Request.call(this, parameters);
+function RegisteredSponsorCreationRequest(headers, body) {
+	Request.call(this, headers, body);
 
-	this.required = required;
-	this.validations = validations;
+	this.bodyRequired = bodyRequired;
+	this.bodyValidations = bodyValidations;
 }
 
 RegisteredSponsorCreationRequest.prototype = Object.create(Request.prototype);

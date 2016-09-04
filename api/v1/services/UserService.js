@@ -3,35 +3,9 @@ var Promise = require('bluebird');
 var _ = require('lodash');
 
 var User = require('../models/User');
+var Token = require('../models/Token');
 var errors = require('../errors');
 var utils = require('../utils');
-
-/**
- * Finds a user by its email address
- * @param  {String} email the email to query
- * @return {Array} the possible (one) matching user, or an empty array
- */
-function _findUserByEmail (email) {
-	if (email) {
-		email = email.toLowerCase();
-		return User.query().where('Email', email).select();
-	}
-
-	return Promise.resolve([]);
-}
-
-/**
- * Finds a user by its datastore ID
- * @param  {Number} id the ID to query
- * @return {Array} the possible (one) matching user, or an empty array
- */
-function _findUserById (id) {
-	if (id) {
-		return User.query().where('ID', id).select();
-	}
-
-	return Promise.resolve([]);
-}
 
 /**
  * Creates a user of the specified role. When a password is not specified, a
@@ -54,10 +28,10 @@ module.exports.createUser = function (firstName, lastName, email, password, role
 		.validate()
 		.catch(Checkit.Error, utils.errors.handleValidationError)
 		.then(function (validated) {
-			return _findUserByEmail(email);
+			return User.findByEmail(email);
 		})
 		.then(function (result) {
-			if (!_.isEmpty(result)) {
+			if (!_.isNull(result)) {
 				var message = "A user with the given email already exists";
 				var source = "email";
 				throw new errors.InvalidParameterError(message, source);
@@ -66,7 +40,6 @@ module.exports.createUser = function (firstName, lastName, email, password, role
 			return user.setPassword(password);
 		})
 		.then(function () {
-			// TODO: add user to mailing list
 			return user.save();
 		})
 		.then(function (user) {
@@ -81,15 +54,16 @@ module.exports.createUser = function (firstName, lastName, email, password, role
  * @throws {NotFoundError} when the requested user cannot be found
  */
 module.exports.findUserById = function (id) {
-	return _findUserById(id)
+	return User
+		.findById(id)
 		.then(function (result) {
-			if (_.isEmpty(result)) {
+			if (_.isNull(result)) {
 				var message = "A user with the given ID cannot be found";
 				var source = "id";
 				throw new errors.NotFoundError(message, source);
 			}
 
-			return Promise.resolve(User.forge(_.head(result)));
+			return Promise.resolve(result);
 		});
 };
 
@@ -100,15 +74,16 @@ module.exports.findUserById = function (id) {
  * @throws {NotFoundError} when the requested user cannot be found
  */
 module.exports.findUserByEmail = function (email) {
-	return _findUserByEmail(email)
+	return User
+		.findByEmail(email)
 		.then(function (result) {
-			if (_.isEmpty(result)) {
+			if (_.isNull(result)) {
 				var message = "A user with the given email cannot be found";
 				var source = "email";
 				throw new errors.NotFoundError(message, source);
 			}
 
-			return Promise.resolve(User.forge(_.head(result)));
+			return Promise.resolve(result);
 		});
 };
 
@@ -130,5 +105,19 @@ module.exports.verifyPassword = function (user, password) {
 			}
 
 			return Promise.resolve(true);
+		});
+};
+
+/**
+ * Resets the user's password and saves it.
+ * @param  {User} user a User model
+ * @param  {String} password the password to change to
+ * @return {Promise} resolving to the new User model
+ */
+module.exports.resetPassword = function (user, password) {
+	return user
+		.setPassword(password)
+		.then(function (updated) {
+			return updated.save();
 		});
 };

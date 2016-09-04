@@ -1,7 +1,7 @@
 var Request = require('./Request');
 
-var required = ['firstName', 'lastName', 'email', 'password', 'confirmedPassword'];
-var validations = {
+var bodyRequired = ['firstName', 'lastName', 'email', 'password', 'confirmedPassword'];
+var bodyValidations = {
 	'firstName': ['string', 'maxLength:255'],
 	'lastName': ['string', 'maxLength:255'],
 	'email': ['email'],
@@ -10,11 +10,12 @@ var validations = {
 		message: "The confirmed password must match the password" }]
 };
 
-function HackerUserCreationRequest(parameters) {
-	Request.call(this, parameters);
+// usable whenever a request is made to create a Hacker
+function HackerUserCreationRequest(headers, body) {
+	Request.call(this, headers, body);
 
-	this.required = required;
-	this.validations = validations;
+	this.bodyRequired = bodyRequired;
+	this.bodyValidations = bodyValidations;
 }
 
 HackerUserCreationRequest.prototype = Object.create(Request.prototype);
