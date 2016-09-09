@@ -108,3 +108,49 @@ module.exports.updateRegistration = function(registrationInstance, registration)
 		return Promise.resolve(result);
 	});
 }
+
+
+/**
+* Updates the submitted timestamp of an existing registration instance.
+* @param  {Object} registrationInstance the registration being updated
+* @return {Promise} resolving to the updated registration instance
+*/
+module.exports.submitRegistration = function(registrationInstance){
+	registrationInstance.set({submitted: new Date()});
+	return registrationInstance
+	.validateSubmission()
+	.catch(Checkit.Error, utils.errors.handleValidationError)
+	.then(function (validated) {
+		return registrationInstance.getResume()
+	})
+	.then(function (resume) {
+		if(!resume){
+			var message = "No resume exists for the given user";
+			var source = "resume";
+			throw new errors.MissingParameterError(message, source);
+		}
+		return registrationInstance.save();
+	})
+	.then(function (result) {
+		return Promise.resolve(result);
+	});
+}
+
+
+/**
+* Removes the submitted timestamp of an existing registration instance.
+* @param  {Object} registrationInstance the registration being updated
+* @return {Promise} resolving to the updated registration instance
+*/
+module.exports.withdrawSubmission = function(registrationInstance){
+	registrationInstance.set({submitted: null});
+	return registrationInstance
+	.validate()
+	.catch(Checkit.Error, utils.errors.handleValidationError)
+	.then(function (validated) {
+		return registrationInstance.save();
+	})
+	.then(function (result) {
+		return Promise.resolve(result);
+	});
+}

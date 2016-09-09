@@ -97,6 +97,7 @@ CREATE TABLE `hackers`(
   `user_id` INT UNSIGNED NOT NULL,
   `created` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  'submitted' DATETIME NULL,
 
   `age` TINYINT UNSIGNED,
   `gender` ENUM('NONE', 'MALE', 'FEMALE', 'NON_BINARY', 'OTHER'),
@@ -104,8 +105,6 @@ CREATE TABLE `hackers`(
   `graduation_year` SMALLINT UNSIGNED,
   `major` VARCHAR(255),
   `diet` ENUM('NONE', 'VEGETARIAN', 'VEGAN', 'GLUTEN_FREE'),
-  #`resume` = ndb.BlobKeyProperty(required=True)
-  #`resume_filename` = ndb.StringProperty(required=True, indexed=False)
   `professional_interest` ENUM('NONE', 'FULL_TIME', 'INTERNSHIP', 'BOTH'),
   `linkedin_url` VARCHAR(255),
   `github_url` VARCHAR(255),

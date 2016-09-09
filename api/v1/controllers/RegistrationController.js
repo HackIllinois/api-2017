@@ -64,6 +64,48 @@ function getRegistration(req, res, next) {
   });
 }
 
+function submitRegistration(req, res, next) {
+  var email = req.auth.email;
+  services.UserService.findUserByEmail(email)
+  .then(function(user){
+	return services.RegistrationService.findRegistrationByUser(user);
+  })
+  .then(function(registration){
+	return services.RegistrationService.submitRegistration(registration);
+  })
+  .then(function(updatedRegistration){
+	res.body = updatedRegistration.toJSON();
+
+	next();
+	return null;
+  })
+  .catch(function (error){
+	next(error);
+	return null;
+  });
+}
+
+function withdrawSubmission(req, res, next) {
+  var email = req.auth.email;
+  services.UserService.findUserByEmail(email)
+  .then(function(user){
+	return services.RegistrationService.findRegistrationByUser(user);
+  })
+  .then(function(registration){
+	return services.RegistrationService.withdrawSubmission(registration);
+  })
+  .then(function(updatedRegistration){
+	res.body = updatedRegistration.toJSON();
+
+	next();
+	return null;
+  })
+  .catch(function (error){
+	next(error);
+	return null;
+  });
+}
+
 /**
  * Determines whether or not the requester is registering for the correct role.
  * @throws UnauthorizedError when user is attempting to register for a role
@@ -82,9 +124,12 @@ router.use(bodyParser.json());
 router.use(middleware.auth);
 router.use(middleware.request);
 
-router.get('/:role', roleMatchesUser, getRegistration);
-router.post('/:role', roleMatchesUser, registerUser);
-router.put('/:role', roleMatchesUser, updateRegistration);
+router.get('/:role', middleware.permission(utils.roles.ANY), roleMatchesUser, getRegistration);
+router.post('/:role', middleware.permission(utils.roles.ANY), roleMatchesUser, registerUser);
+router.put('/:role', middleware.permission(utils.roles.ANY), roleMatchesUser, updateRegistration);
+
+router.post('/submit', middleware.permission(utils.roles.ANY), submitRegistration);
+router.delete('/submit', middleware.permission(utils.roles.ANY), withdrawSubmission);
 
 router.use(middleware.response);
 router.use(middleware.errors);
