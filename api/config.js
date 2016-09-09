@@ -76,6 +76,8 @@ config.profile = 'hackillinois-api';
 
 config.domain = isDevelopment ? ('http://localhost:' + config.port) : 'https://hackillinois.org';
 
+config.superuser.firstName = "Super";
+config.superuser.lastName = "User";
 config.superuser.email = superuserEmail;
 config.superuser.password = superuserPassword;
 

@@ -1,7 +1,9 @@
 var Request = require('./Request');
 
-var bodyRequired = ['email', 'password', 'confirmedPassword'];
+var bodyRequired = ['firstName', 'lastName', 'email', 'password', 'confirmedPassword'];
 var bodyValidations = {
+	'firstName': ['string', 'maxLength:255'],
+	'lastName': ['string', 'maxLength:255'],
 	'email': ['email'],
 	'password': ['string', 'minLength:8'],
 	'confirmedPassword': [{ rule: 'matchesField:password',

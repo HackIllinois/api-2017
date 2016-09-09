@@ -4,8 +4,12 @@ var _Promise = require('bluebird');
 var bcrypt = _Promise.promisifyAll(require('bcrypt'));
 var _ = require('lodash');
 
+var database = require('../../database');
+var bookshelf = database.instance();
+
 var crypto = require('../utils/crypto');
 var roles = require('../utils/roles');
+var services = require('../services');
 
 const SALT_ROUNDS = 12;
 
@@ -15,11 +19,23 @@ var User = Model.extend({
 	idAttribute: 'id',
 	hasTimestamps: ['created', 'updated'],
 	validations: {
+	  firstName: ['required', 'string', 'maxLength:255'],
+	  lastName: ['required', 'string', 'maxLength:255'],
 		email: ['required', 'email'],
 		password: ['required', 'string', 'minLength:8'],
 		role: ['required', 'string', roles.verifyRole]
 	}
 });
+
+
+/**
+ * Returns the Team this User instance is on
+ * @return {Promise} resolving to the user's team
+ */
+User.prototype.team = function () {
+  var TeamsUser = bookshelf.model('TeamsUser')
+	return TeamsUser.findTeamByUser(this);
+}
 
 /**
  * Finds a user by its email address
@@ -69,4 +85,4 @@ User.prototype.toJSON = function () {
 	return _.omit(this.attributes, ['password']);
 };
 
-module.exports = User;
+module.exports = bookshelf.model('User', User);

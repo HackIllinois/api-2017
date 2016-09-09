@@ -1,0 +1,12 @@
+DROP TABLE `hackers`;
+DROP TABLE `mentors`;
+DROP TABLE `sponsors`;
+DROP TABLE `volunteers`;
+DROP TABLE `staff`;
+DROP TABLE `admins`;
+DROP TABLE `teams_users`;
+DROP TABLE `teams`;
+DROP TABLE `organizations`;
+ALTER TABLE `users`
+	DROP COLUMN `first_name`,
+	DROP COLUMN `last_name`;

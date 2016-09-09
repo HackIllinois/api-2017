@@ -2,7 +2,9 @@ module.exports = {
 	AuthService: require('./AuthService'),
 	MailService: require('./MailService'),
 	PermissionService: require('./PermissionService'),
+	RegistrationService: require('./RegistrationService'),
 	StorageService: require('./StorageService'),
-	UserService: require('./UserService'),
-	TokenService: require('./TokenService')
+	TeamService: require('./TeamService'),
+	TokenService: require('./TokenService'),
+	UserService: require('./UserService')
 };

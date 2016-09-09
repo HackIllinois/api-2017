@@ -1,8 +1,10 @@
 var roles = require('../utils/roles');
 var Request = require('./Request');
 
-var bodyRequired = ['email', 'role'];
+var bodyRequired = ['firstName', 'lastName', 'email', 'role'];
 var bodyValidations = {
+	'firstName': ['string', 'maxLength:255'],
+	'lastName': ['string', 'maxLength:255'],
 	'email': ['email'],
 	'role': ['string', roles.verifyRole]
 };

@@ -14,6 +14,8 @@ v1.all('*', function(req, res, next) {
 var controllers = require('./controllers');
 v1.use('/auth', controllers.AuthController.router);
 v1.use('/user', controllers.UserController.router);
+v1.use('/registration', controllers.RegistrationController.router);
+v1.use('/team', controllers.TeamController.router);
 v1.use('/upload', controllers.UploadController.router);
 
 module.exports = v1;
