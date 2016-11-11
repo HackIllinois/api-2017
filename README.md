@@ -116,7 +116,7 @@ Note that if you're looking to contribute to this codebase, you should read the
 [database README](/database/README.md) as well. It contains important information that all
 contributors should be familiar with.
 
-## Starting Up
+## Usage
 
 A local API instance can be created on port 8080 via the following commands,
 executed from the root of the project directory.
@@ -134,6 +134,20 @@ npm run prod
 Use `Control-C` to kill the server. Note that `node` must be on your path and that
 the configuration for the target environment must be present in the `config` directory.
 
+
+If you would like to see the available commands, run
+``` shell
+node api.js -h
+```
+
+We currently support
+
+| Argument Parameter | Description |
+| ------------------ | ----------- |
+| -h                 | Show help   |
+| -t                 | Run tests   |
+
+
 ## Documentation
 
 All documentation is available on the [project wiki](https://github.com/HackIllinois/api-2017/wiki).
@@ -147,3 +161,12 @@ Any issues found in a feature branch (i.e. not in `master` or `staging`)
 should be communicated to the active developer(s) directly, unless there is an open
 pull-request for that feature branch. In the latter case, just leave a comment on
 the pull-request detailing the issue preventing a merge.
+
+## Testing
+
+Please set the proper enviornment variables before testing. You can run the tests locally with
+
+``` shell
+node api.js -t
+```
+
