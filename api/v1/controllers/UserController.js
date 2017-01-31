@@ -9,7 +9,6 @@ var requests = require('../requests');
 var scopes = require('../utils/scopes');
 var mail = require('../utils/mail');
 var roles = require('../utils/roles');
-
 var router = require('express').Router();
 
 /**
@@ -77,6 +76,21 @@ function getUser (req, res, next) {
 		});
 }
 
+function getUserByEmail (req, res, next) {
+	var email = req.params.email;
+
+	services.UserService
+		.findUserByEmail(email)
+		.then(function(user) {
+			res.body = user.toJSON();
+
+			return next();
+		})
+		.catch(function (error) {
+			return next(error);
+		});
+}
+
 function requestPasswordReset (req, res, next) {
 	var userEmail = req.body.email;
 
@@ -126,6 +140,7 @@ router.post('/accredited', middleware.request(requests.AccreditedUserCreationReq
 	middleware.permission(roles.ORGANIZERS), createAccreditedUser);
 router.post('/reset', middleware.request(requests.ResetTokenRequest), requestPasswordReset);
 router.get('/:id', middleware.permission(roles.ORGANIZERS, isRequester), getUser);
+router.get('/email/:email', middleware.permission(roles.ORGANIZERS), getUserByEmail);
 router.delete('/', middleware.permission(roles.SUPERUSER), deleteUser);
 
 router.use(middleware.response);
