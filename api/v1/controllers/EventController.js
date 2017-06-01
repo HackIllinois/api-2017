@@ -64,13 +64,19 @@ function getEvents (req, res, next) {
     services.EventService.getEvents(activeOnly)
         .then(function (result) {
             res.body = result.toJSON();
-
-            next();
             return null;
         })
+        .then(function () {
+            return _Promise.map(res.body[0].locations, function(loc) {
+                loc.id = loc.locationId;
+                return null;
+            });
+        })
+        .then(function () {
+            return next();
+        })
         .catch(function (error) {
-            next(error);
-            return null;
+            return next(error);
         });
 }
 
