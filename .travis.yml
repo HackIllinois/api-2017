@@ -35,3 +35,5 @@ deploy:
   env: "hackillinois-api"
   bucket_name: $HACKILLINOIS_BUCKET_NAME
   skip_cleanup: true
+  deploy:
+    on: prod-debug

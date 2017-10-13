@@ -32,7 +32,9 @@ function handleEnvironmentOverrides (config, overrides) {
         overrideValue = parseInt(overrideValue);
       }
 
+      console.log('overriding %s, with %s', process.env[envKey], overrideValue);
       _.set(config, configKey, overrideValue);
+      console.log('after override config is: %j', config);
     }
   });
 }
