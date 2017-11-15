@@ -5,5 +5,6 @@ module.exports = {
   response: require('./response.js'),
   request: require('./request.js'),
   upload: require('./upload.js'),
-  ratelimiting: require('./ratelimiting.js')
+  ratelimiting: require('./ratelimiting.js'),
+  enabled: require('./enabled.js')
 };

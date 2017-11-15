@@ -12,6 +12,7 @@ v1.use((req, res, next) => {
 });
 
 v1.use(middleware.ratelimiting);
+v1.use(middleware.enabled);
 
 // set up CORS to allow for usage from different origins
 // we may remove this in the future
@@ -37,6 +38,7 @@ v1.use('/stats', controllers.StatsController.router);
 v1.use('/tracking', controllers.TrackingController.router);
 v1.use('/mail', controllers.MailController.router);
 v1.use('/event', controllers.EventController.router);
+v1.use('/endpointaccess', controllers.EndpointController.router);
 
 // logs resolved requests (the request once processed by various middleware) and outgoing responses
 v1.use((req, res, next) => {
