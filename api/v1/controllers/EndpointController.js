@@ -11,11 +11,6 @@ function modifyEndpointAccess(req, res, next) {
   // Write enabled / disabled state to database
   cache.set(req.body.endpoint, req.body.enabled);
 
-  // Test reading back the endpoint state
-  // cache.get(req.body.endpoint, function(err, reply) {
-  //   console.log(reply);
-  // });
-
   next();
 }
 
