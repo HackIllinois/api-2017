@@ -52,8 +52,10 @@ configuration key values.
 | SUPERUSER_EMAIL | superuser.email | Any valid email |
 | SUPERUSER_PASSWORD | superuser.password | Any string |
 | MAIL_KEY | mail.key | Any string |
-| GITHUB_CLIENT_ID | auth.github.id | Any string |
-| GITHUB_CLIENT_SECRET | auth.github.secret | Any String |
+| GITHUB_WEB_CLIENT_ID | github.web.id | Any string |
+| GITHUB_WEB_CLIENT_SECRET | github.web.secret. | Any string |
+| GITHUB_NATIVE_CLIENT_ID | github.native.id | Any string |
+| GITHUB_NATIVE_CLIENT_SECRET | github.native.secret. | Any string |
 | DB_NAME | database.primary.name | Any valid MySQL schema name |
 | DB_USERNAME | database.primary.user | Any string |
 | DB_PASSWORD | database.primary.password | Any string |

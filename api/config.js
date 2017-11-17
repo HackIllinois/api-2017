@@ -69,8 +69,10 @@ overrides['APP_PORT'] = 'port';
 overrides['SUPERUSER_EMAIL'] = 'superuser.email';
 overrides['SUPERUSER_PASSWORD'] = 'superuser.password';
 overrides['MAIL_KEY'] = 'mail.key';
-overrides['GITHUB_CLIENT_ID'] = 'auth.github.id';
-overrides['GITHUB_CLIENT_SECRET'] = 'auth.github.secret';
+overrides['GITHUB_WEB_CLIENT_ID'] = 'auth.github.web.id';
+overrides['GITHUB_WEB_CLIENT_SECRET'] = 'auth.github.web.secret';
+overrides['GITHUB_NATIVE_CLIENT_ID'] = 'auth.github.native.id';
+overrides['GITHUB_NATIVE_CLIENT_SECRET'] = 'auth.github.native.secret';
 overrides['DB_NAME'] = 'database.primary.name';
 overrides['DB_USERNAME'] = 'database.primary.user';
 overrides['DB_PASSWORD'] = 'database.primary.password';
@@ -84,8 +86,10 @@ handleAWSOverrides(config);
 const requireds = new Set(_.values(overrides));
 if (!config.isProduction) {
   requireds.delete(overrides['MAIL_KEY']);
-  requireds.delete(overrides['GITHUB_CLIENT_ID']);
-  requireds.delete(overrides['GITHUB_CLIENT_SECRET']);
+  requireds.delete(overrides['GITHUB_WEB_CLIENT_ID']);
+  requireds.delete(overrides['GITHUB_WEB_CLIENT_SECRET']);
+  requireds.delete(overrides['GITHUB_NATIVE_CLIENT_ID']);
+  requireds.delete(overrides['GITHUB_NATIVE_CLIENT_SECRET']);
 }
 handleEnvironmentRequireds(config, requireds);
 
