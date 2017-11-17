@@ -67,17 +67,17 @@ module.exports.verify = (token) => _Promise.try(() =>
     throw new errors.UnprocessableRequestError(message);
   });
 
-module.exports.getGitHubSessionCodeURL = () => GITHUB_AUTH_REDIRECT + config.auth.github.id;
+module.exports.getGitHubSessionCodeURL = (nativeClient) => GITHUB_AUTH_REDIRECT + (nativeClient ? config.auth.github.native.id : config.auth.github.web.id);
 
-module.exports.requestGitHubAccessToken = (code) => {
+module.exports.requestGitHubAccessToken = (code, nativeClient) => {
   let token;
   let githubHandle;
 
   return request({
     uri: GITHUB_TOKEN_URL,
     qs: {
-      client_id: config.auth.github.id,
-      client_secret: config.auth.github.secret,
+      client_id: (nativeClient) ? config.auth.github.native.id : config.auth.github.web.id,
+      client_secret: (nativeClient) ? config.auth.github.native.secret : config.auth.github.web.secret,
       code: code
     },
     headers: {

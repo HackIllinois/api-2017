@@ -5,9 +5,16 @@
     "expiration": "7d",
     "secret": "VERY_SPECIAL_KEY",
     "github": {
-      "id": null,
-      "secret": null,
-      "useragent": "HackIllinois"
+      "web": {
+        "id": null,
+        "secret": null,
+        "useragent": "HackIllinois"
+      },
+      "native": {
+        "id": null,
+        "secret": null,
+        "useragent": "HackIllinois"
+      }
     },
     "headers": {
       "all": "Authorization",
