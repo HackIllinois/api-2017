@@ -48,12 +48,12 @@ function createToken(req, res, next) {
 }
 
 function getGitHubAuthToken(req, res, next) {
-  res.redirect(AuthService.getGitHubSessionCodeURL(!!req.query.mobile));
+  res.redirect(AuthService.getGitHubSessionCodeURL(!!req.query.client));
   return next();
 }
 
 function getGitHubAccessToken(req, res, next) {
-  AuthService.requestGitHubAccessToken(req.query.code, !!req.query.mobile)
+  AuthService.requestGitHubAccessToken(req.query.code, !!req.query.client)
   .then((gitLogin) => {
     res.body = {
       auth: gitLogin

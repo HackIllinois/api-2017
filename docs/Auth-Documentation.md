@@ -139,7 +139,7 @@ URL Parameters
 
 | Parameter  | Description                                                                                           | Required |
 |------------|-------------------------------------------------------------------------------------------------------|----------|
-| `mobile`   | Whether the requesting client is mobile                                                               | If Native client |
+| `client`   | Whether the requesting client is a native client                                                      | If Native client |
 
 Request Parameters
 
@@ -164,7 +164,7 @@ URL Parameters
 | Parameter  | Description                                                                                           | Required |
 |------------|-------------------------------------------------------------------------------------------------------|----------|
 | `code`     | A valid Github access code                                                                            | Yes      |
-| `mobile`   | Whether the requesting client is mobile                                                               | If Native client |
+| `client`   | Whether the requesting client is a native client                                                      | If Native client |
 
 Request Parameters
 
