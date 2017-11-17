@@ -80,6 +80,8 @@ overrides['DB_HOSTNAME'] = 'database.primary.host';
 overrides['DB_PORT'] = 'database.primary.port';
 overrides['REDIS_HOST'] = 'redis.host';
 overrides['REDIS_PORT'] = 'redis.port';
+overrides['RATELIMIT_COUNT'] = 'limit.count';
+overrides['RATELIMIT_WINDOW'] = 'limit.window';
 handleEnvironmentOverrides(config, overrides);
 handleAWSOverrides(config);
 
@@ -90,6 +92,8 @@ if (!config.isProduction) {
   requireds.delete(overrides['GITHUB_WEB_CLIENT_SECRET']);
   requireds.delete(overrides['GITHUB_NATIVE_CLIENT_ID']);
   requireds.delete(overrides['GITHUB_NATIVE_CLIENT_SECRET']);
+  requireds.delete(overrides['RATELIMIT_COUNT']);
+  requireds.delete(overrides['RATELIMIT_WINDOW']);
 }
 handleEnvironmentRequireds(config, requireds);
 
