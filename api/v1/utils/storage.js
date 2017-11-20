@@ -1,8 +1,15 @@
-const config = require('../../config');
+function Storage(ctx) {
+  let config = ctx.config();
 
-module.exports.buckets = {};
+  this.buckets = {};
+  Object.keys(config.storage.buckets)
+    .forEach((key) => {
+      this.buckets[key] = config.storage.buckets[key] + config.storage.bucketExtension;
+    });
+}
 
-Object.keys(config.storage.buckets)
-  .forEach((key) => {
-    module.exports.buckets[key] += config.storage.bucketExtension;
-  });
+Storage.prototype.constructor = Storage;
+
+module.exports = function(ctx) {
+  return new Storage(ctx);
+}
