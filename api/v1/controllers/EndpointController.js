@@ -26,6 +26,8 @@ function modifyEndpointAccess(req, res, next) {
     }).save(null, {method: methodType});
   });
 
+  res.body = req.body;
+
   next();
 }
 
