@@ -11,7 +11,7 @@ const cache = require('../../cache').instance();
 
 function modifyEndpointAccess(req, res, next) {
   // Write enabled / disabled state to cache
-  cache.set(req.body.endpoint, req.body.enabled);
+  // cache.set(req.body.endpoint, req.body.enabled);
 
   // Write enabled / disabled state to databas
   Endpoint.query({where: {endpoint: req.body.endpoint}}).fetch().then(function (endpointModel) {
