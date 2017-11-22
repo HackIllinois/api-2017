@@ -3,32 +3,36 @@ const router = require('express').Router();
 
 const EndpointAccessRequest = require('../requests/EndpointAccessRequest');
 const middleware = require('../middleware');
-const roles = require('../utils/roles');
+// const roles = require('../utils/roles');
 
 const Endpoint = require('../models/Endpoint');
 
-const cache = require('../../cache').instance();
+// const cache = require('../../cache').instance();
 
 function modifyEndpointAccess(req, res, next) {
-  // Write enabled / disabled state to cache
-  // cache.set(req.body.endpoint, req.body.enabled);
 
-  // Write enabled / disabled state to databas
-  Endpoint.query({where: {endpoint: req.body.endpoint}}).fetch().then(function (endpointModel) {
-    if (endpointModel == null) {
-      methodType = 'insert';
-    } else {
-      methodType = 'update';
-    }
-    Endpoint.forge({
-      endpoint: req.body.endpoint,
-      enabled: req.body.enabled,
-    }).save(null, {method: methodType});
-  });
+  if (req.body.enabled == null) {
+    res.body = {};
+    res.body.endpoint = req.body.endpoint;
+    Endpoint.query({where: {endpoint: req.body.endpoint}}).fetch().then((endpointModel) => {
+      res.body.enabled = (endpointModel == null || endpointModel.attributes.enabled[0] == 1);
+      return next();
+    });
+  } else {
+    // Write enabled / disabled state to cache
+    // cache.set(req.body.endpoint, req.body.enabled);
 
-  res.body = req.body;
-
-  next();
+    // Write enabled / disabled state to databas
+    Endpoint.query({where: {endpoint: req.body.endpoint}}).fetch().then((endpointModel) => {
+      methodType = ((endpointModel == null) ? 'insert' : 'update');
+      Endpoint.forge({
+        endpoint: req.body.endpoint,
+        enabled: req.body.enabled
+      }).save(null, {method: methodType});
+    });
+    res.body = req.body;
+    return next();
+  }
 }
 
 

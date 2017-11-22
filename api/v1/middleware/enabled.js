@@ -1,5 +1,5 @@
 const errors = require('../errors');
-const cache = require('../../cache').instance();
+// const cache = require('../../cache').instance();
 
 const Endpoint = require('../models/Endpoint');
 
@@ -16,12 +16,12 @@ module.exports = (req, res, next) => {
   //   }
   // });
 
-  Endpoint.query({where: {endpoint: req.url}}).fetch().then(function (endpointModel) {
+  Endpoint.query({where: {endpoint: req.url}}).fetch().then((endpointModel) => {
     if (endpointModel == null || endpointModel.attributes.enabled[0] == 1) {
       return next();
-    } else {
-      return next(new errors.EndpointNotAvailableError());
-    }
+    } 
+    return next(new errors.EndpointNotAvailableError());
+    
   });
 
 };
