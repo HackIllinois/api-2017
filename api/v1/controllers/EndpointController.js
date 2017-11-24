@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 const EndpointAccessRequest = require('../requests/EndpointAccessRequest');
 const middleware = require('../middleware');
-// const roles = require('../utils/roles');
+const roles = require('../utils/roles');
 
 const Endpoint = require('../models/Endpoint');
 
@@ -51,10 +51,9 @@ function modifyEndpointAccess(req, res, next) {
 
 
 router.use(bodyParser.json());
-// router.use(middleware.auth);
+router.use(middleware.auth);
 
-// router.post('/', middleware.request(EndpointAccessRequest), middleware.permission(roles.ADMIN), modifyEndpointAccess);
-router.post('/', middleware.request(EndpointAccessRequest), modifyEndpointAccess);
+router.post('/', middleware.request(EndpointAccessRequest), middleware.permission(roles.ADMIN), modifyEndpointAccess);
 
 router.use(middleware.response);
 router.use(middleware.errors);
