@@ -38,11 +38,11 @@ function modifyEndpointAccess(req, res, next) {
 
     // Write enabled / disabled state to databas
     Endpoint.query({where: {endpoint: req.body.endpoint}}).fetch().then((endpointModel) => {
-      methodType = ((endpointModel == null) ? 'insert' : 'update'); // eslint-disable-line no-undef
+      const methodType = ((endpointModel == null) ? 'insert' : 'update');
       Endpoint.forge({
         endpoint: req.body.endpoint,
         enabled: req.body.enabled
-      }).save(null, {method: methodType}); // eslint-disable-line no-undef
+      }).save(null, {method: methodType});
     });
     res.body = req.body;
     return next();
