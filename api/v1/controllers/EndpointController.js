@@ -53,7 +53,7 @@ function modifyEndpointAccess(req, res, next) {
 router.use(bodyParser.json());
 // router.use(middleware.auth);
 
-// router.post('/', middleware.request(EndpointAccessRequest), middleware.permission(roles.ADMIN), test);
+// router.post('/', middleware.request(EndpointAccessRequest), middleware.permission(roles.ADMIN), modifyEndpointAccess);
 router.post('/', middleware.request(EndpointAccessRequest), modifyEndpointAccess);
 
 router.use(middleware.response);
