@@ -28,7 +28,7 @@ function modifyEndpointAccess(req, res, next) {
   // Log the endpoint access change here
   logger.debug('Endpoint Access Changed: %s is %s.',
     req.body.endpoint,
-    req.body.enabled ? "enabled" : "disabled"
+    req.body.enabled ? 'enabled' : 'disabled'
   );
 
   return next();
