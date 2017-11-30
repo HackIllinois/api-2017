@@ -9,6 +9,8 @@ const Endpoint = require('../models/Endpoint');
 
 const cache = require('../../cache').instance();
 
+const logger = require('../../logging');
+
 function modifyEndpointAccess(req, res, next) {
   // Write enabled / disabled state to cache
   cache.set(req.body.endpoint, req.body.enabled);
@@ -22,6 +24,13 @@ function modifyEndpointAccess(req, res, next) {
     }).save(null, {method: methodType});
   });
   res.body = req.body;
+
+  // Log the endpoint access change here
+  logger.debug('Endpoint Access Changed: %s is %s.',
+    req.body.endpoint,
+    req.body.enabled ? "enabled" : "disabled"
+  );
+
   return next();
 }
 
