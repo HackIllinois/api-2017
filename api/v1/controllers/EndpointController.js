@@ -10,43 +10,42 @@ const Endpoint = require('../models/Endpoint');
 const cache = require('../../cache').instance();
 
 function modifyEndpointAccess(req, res, next) {
+  // Write enabled / disabled state to cache
+  cache.set(req.body.endpoint, req.body.enabled);
 
-  if (req.body.enabled == null) {
-    res.body = {};
-    res.body.endpoint = req.body.endpoint;
-    cache.get(req.body.endpoint, (err, reply) => {
-      if (reply != null) {
-        res.body.enabled = (reply == 'true');
+  // Write enabled / disabled state to databas
+  Endpoint.query({where: {endpoint: req.body.endpoint}}).fetch().then((endpointModel) => {
+    const methodType = ((endpointModel == null) ? 'insert' : 'update');
+    Endpoint.forge({
+      endpoint: req.body.endpoint,
+      enabled: req.body.enabled
+    }).save(null, {method: methodType});
+  });
+  res.body = req.body;
+  return next();
+}
+
+function getEndpointAccess(req, res, next) {
+  res.body = {};
+  res.body.endpoint = req.query.endpoint;
+  cache.get(req.query.endpoint, (err, reply) => {
+    if (reply != null) {
+      res.body.enabled = (reply == 'true');
+      return next();
+    } 
+    Endpoint.query({where: {endpoint: res.body.endpoint}}).fetch().then((endpointModel) => {
+      if (endpointModel == null || endpointModel.attributes.enabled[0] == 1) {
+        cache.set(req.query.endpoint, 'true');
+        res.body.enabled = true;
         return next();
       } 
-      Endpoint.query({where: {endpoint: res.body.endpoint}}).fetch().then((endpointModel) => {
-        if (endpointModel == null || endpointModel.attributes.enabled[0] == 1) {
-          cache.set(req.body.endpoint, 'true');
-          res.body.enabled = true;
-          return next();
-        } 
-        cache.set(req.body.endpoint, 'false');
-        res.body.enabled = false;
-        return next();
-          
-      });
-      
+      cache.set(req.query.endpoint, 'false');
+      res.body.enabled = false;
+      return next();
+        
     });
-  } else {
-    // Write enabled / disabled state to cache
-    cache.set(req.body.endpoint, req.body.enabled);
-
-    // Write enabled / disabled state to databas
-    Endpoint.query({where: {endpoint: req.body.endpoint}}).fetch().then((endpointModel) => {
-      const methodType = ((endpointModel == null) ? 'insert' : 'update');
-      Endpoint.forge({
-        endpoint: req.body.endpoint,
-        enabled: req.body.enabled
-      }).save(null, {method: methodType});
-    });
-    res.body = req.body;
-    return next();
-  }
+    
+  });
 }
 
 
@@ -54,6 +53,7 @@ router.use(bodyParser.json());
 router.use(middleware.auth);
 
 router.post('/', middleware.request(EndpointAccessRequest), middleware.permission(roles.ADMIN), modifyEndpointAccess);
+router.get('/', middleware.permission(roles.ADMIN), getEndpointAccess);
 
 router.use(middleware.response);
 router.use(middleware.errors);
