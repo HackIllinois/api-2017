@@ -5,31 +5,12 @@ const EndpointAccessRequest = require('../requests/EndpointAccessRequest');
 const middleware = require('../middleware');
 const roles = require('../utils/roles');
 
-const Endpoint = require('../models/Endpoint');
-
-const cache = require('../../cache').instance();
-
-const logger = require('../../logging');
+const EndpointService = require('../services/EndpointService');
 
 function modifyEndpointAccess(req, res, next) {
-  // Write enabled / disabled state to cache
-  cache.set(req.body.endpoint, req.body.enabled);
+  EndpointService.modifyEndpointAccess(req.body.endpoint, req.body.enabled);
 
-  // Write enabled / disabled state to databas
-  Endpoint.query({where: {endpoint: req.body.endpoint}}).fetch().then((endpointModel) => {
-    const methodType = ((endpointModel == null) ? 'insert' : 'update');
-    Endpoint.forge({
-      endpoint: req.body.endpoint,
-      enabled: req.body.enabled
-    }).save(null, {method: methodType});
-  });
   res.body = req.body;
-
-  // Log the endpoint access change here
-  logger.debug('Endpoint Access Changed: %s is %s.',
-    req.body.endpoint,
-    req.body.enabled ? 'enabled' : 'disabled'
-  );
 
   return next();
 }
@@ -37,24 +18,16 @@ function modifyEndpointAccess(req, res, next) {
 function getEndpointAccess(req, res, next) {
   res.body = {};
   res.body.endpoint = req.query.endpoint;
-  cache.get(req.query.endpoint, (err, reply) => {
-    if (reply != null) {
-      res.body.enabled = (reply == 'true');
-      return next();
-    } 
-    Endpoint.query({where: {endpoint: res.body.endpoint}}).fetch().then((endpointModel) => {
-      if (endpointModel == null || endpointModel.attributes.enabled[0] == 1) {
-        cache.set(req.query.endpoint, 'true');
-        res.body.enabled = true;
-        return next();
-      } 
-      cache.set(req.query.endpoint, 'false');
+  EndpointService.getEndpointAccess(req.query.endpoint,
+    () => {
+      res.body.enabled = true;
+      next();
+    }, 
+    () => {
       res.body.enabled = false;
-      return next();
-        
-    });
-    
-  });
+      next();
+    }
+  )
 }
 
 
