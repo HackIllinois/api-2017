@@ -18,6 +18,8 @@ const AttendeeExtraInfo = require('./AttendeeExtraInfo');
 const AttendeeEcosystemInterest = require('./AttendeeEcosystemInterest');
 const AttendeeRequestedCollaborator = require('./AttendeeRequestedCollaborator');
 const AttendeeRSVP = require('./AttendeeRSVP');
+const AttendeeWebsite = require('./AttendeeWebsite');
+const AttendeeOSContributor = require('./AttendeeOSContributor');
 const Attendee = Model.extend({
   tableName: 'attendees',
   idAttribute: 'id',
@@ -60,6 +62,12 @@ const Attendee = Model.extend({
   extras: function() {
     return this.hasMany(AttendeeExtraInfo);
   },
+  websites: function() {
+    return this.hasMany(AttendeeWebsite);
+  },
+  osContributors: function() {
+    return this.hasMany(AttendeeOSContributor);
+  },
   collaborators: function() {
     return this.hasMany(AttendeeRequestedCollaborator);
   },
@@ -85,7 +93,7 @@ Attendee.findByUserId = function(userId) {
     user_id: userId
   })
     .fetch({
-      withRelated: ['projects', 'ecosystemInterests', 'extras', 'collaborators', 'rsvp']
+      withRelated: ['projects', 'ecosystemInterests', 'extras', 'websites', 'osContributors', 'collaborators', 'rsvp']
     });
 };
 
@@ -102,7 +110,7 @@ Attendee.fetchWithResumeByUserId = function(userId) {
       user_id: userId
     })
       .fetch({
-        withRelated: ['projects', 'ecosystemInterests', 'extras', 'collaborators', 'rsvp'],
+        withRelated: ['projects', 'ecosystemInterests', 'extras', 'websites', 'osContributors', 'collaborators', 'rsvp'],
         transacting: t
       })
       .then((a) => {
@@ -137,7 +145,7 @@ Attendee.findById = function(id) {
     id: id
   })
     .fetch({
-      withRelated: ['projects', 'ecosystemInterests', 'extras', 'collaborators', 'rsvp']
+      withRelated: ['projects', 'ecosystemInterests', 'extras', 'websites', 'osContributors', 'collaborators', 'rsvp']
     });
 };
 
@@ -153,7 +161,7 @@ Attendee.fetchWithResumeById = function(id) {
       id: id
     })
       .fetch({
-        withRelated: ['projects', 'ecosystemInterests', 'extras', 'collaborators', 'rsvp'],
+        withRelated: ['projects', 'ecosystemInterests', 'extras', 'websites', 'osContributors', 'collaborators', 'rsvp'],
         transacting: t
       })
       .then((a) => {

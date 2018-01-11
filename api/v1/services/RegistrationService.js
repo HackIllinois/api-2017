@@ -413,7 +413,9 @@ module.exports.updateAttendee = (attendee, attributes) => {
     'ecosystemInterests': [],
     'projects': [],
     'extras': [],
-    'collaborators': []
+    'collaborators': [],
+    'websites': [],
+    'oscontributors': []
   });
 
   if (!_hasValidAttendeeAssignment(attributes.projects, attributes.ecosystemInterests)) {
