@@ -9,7 +9,7 @@ const _Promise = require('bluebird');
 const SparkPost = require('sparkpost');
 const _ = require('lodash');
 
-const ctx = require("ctx");
+const ctx = require('ctx');
 const config = ctx.config();
 const logger = ctx.logger();
 const files = require('../../files');
@@ -128,7 +128,7 @@ function send(recipients, template, substitutions) {
 })
 		.then(() =>
 			// get rid of the transmission response
-     true)
+     _Promise.resolve(true))
 		.catch(_handleClientError);
 }
 
