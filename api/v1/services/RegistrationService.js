@@ -14,6 +14,8 @@ const errors = require('../errors');
 const utils = require('../utils');
 const config = require('ctx').config();
 
+const StatsService = require('../services/StatsService');
+
 /**
  * Persists (insert or update) a model instance and creates (insert only) any
  * related models as provided by the related mapping. Use #extractRelatedObjects
@@ -324,6 +326,17 @@ module.exports.createAttendee = (user, attributes) => {
     const source = [];
     return _Promise.reject(new errors.InvalidParameterError(message, source));
   }
+
+  StatsService.incrementStat('registration', 'transportation', attributes.attendee.transportation);
+  StatsService.incrementStat('registration', 'diet', attributes.attendee.diet);
+  StatsService.incrementStat('registration', 'shirt_size', attributes.attendee.shirtSize);
+  StatsService.incrementStat('registration', 'gender', attributes.attendee.gender);
+  StatsService.incrementStat('registration', 'is_novice', attributes.attendee.isNovice);
+  StatsService.incrementStat('registration', 'status', attributes.attendee.status);
+  StatsService.incrementStat('registration', 'attendees', 'count');
+  StatsService.incrementStat('registration', 'school', attributes.attendee.school);
+  StatsService.incrementStat('registration', 'graduation_year', attributes.attendee.graduationYear);
+  StatsService.incrementStat('registration', 'major', attributes.attendee.major);
 
   const attendeeAttrs = attributes.attendee;
   delete attributes.attendee;
