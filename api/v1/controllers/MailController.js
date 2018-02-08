@@ -17,8 +17,7 @@ function sendMailinglist(req, res, next) {
   const mailList = config.mail.lists[listName];
   const template = req.body.template;
 
-  services.MailService.checkIfSent(mailList)
-    .then(() => services.MailService.sendToList(mailList, template))
+  services.MailService.sendToList(mailList, template)
     .then(() => {
       if (_.includes(ACCEPTANCE_LISTS, listName)) {
         return services.MailService.markAsSent(mailList);
