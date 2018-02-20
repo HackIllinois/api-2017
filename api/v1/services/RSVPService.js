@@ -66,9 +66,6 @@ module.exports.findRSVPByAttendee = (attendee) => RSVP
  * @returns {Promise} the resolved RSVP
  */
 module.exports.updateRSVP = (user, rsvp, attributes) => {
-  rsvp.set({
-    'type': null
-  });
   rsvp.set(attributes);
 
   return rsvp
@@ -76,7 +73,7 @@ module.exports.updateRSVP = (user, rsvp, attributes) => {
     .catch(CheckitError, utils.errors.handleValidationError)
     .then(() => {
       const userRole = user.getRole(utils.roles.ATTENDEE);
-      rsvp.get('isAttending') ? UserRole.setActive(userRole, true) : UserRole.setActive(userRole, false); //eslint-disable-line no-unused-expressions
+      UserRole.setActive(userRole, rsvp.get('isAttending'));
 
       return rsvp.save();
     });
