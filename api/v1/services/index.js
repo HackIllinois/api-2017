@@ -1,6 +1,7 @@
 module.exports = {
   AuthService: require('./AuthService'),
   EcosystemService: require('./EcosystemService'),
+  EndpointService: require('./EndpointService'),
   EventService: require('./EventService'),
   MailService: require('./MailService'),
   PermissionService: require('./PermissionService'),

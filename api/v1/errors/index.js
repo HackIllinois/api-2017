@@ -14,5 +14,6 @@ module.exports = {
   TokenExpirationError: require('./TokenExpirationError.js'),
   InvalidTrackingStateError: require('./InvalidTrackingStateError'),
   UnauthorizedError: require('./UnauthorizedError.js'),
-  UnprocessableRequestError: require('./UnprocessableRequestError.js')
+  UnprocessableRequestError: require('./UnprocessableRequestError.js'),
+  EndpointNotAvailableError: require('./EndpointNotAvailableError.js')
 };
