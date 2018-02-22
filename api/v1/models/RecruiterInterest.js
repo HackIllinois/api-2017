@@ -8,7 +8,7 @@ const RecruiterInterest = Model.extend({
     recruiterId: ['required','integer'],
     attendeeId: ['required','integer'],
     comments: ['string'],
-    favorite: ['integer']
+    favorite: ['boolean']
   }
 });
 

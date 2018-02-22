@@ -4,7 +4,7 @@ const bodyRequired = [];
 const bodyAllowed = [ 'comments', 'favorite']
 const bodyValidations = {
   'comments': ['string', 'maxLength:255'],
-  'favorite': ['natural']
+  'favorite': ['boolean']
 };
 
 function UpdateRecruiterInterestRequest(headers, body) {
