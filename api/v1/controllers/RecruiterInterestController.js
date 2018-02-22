@@ -17,7 +17,7 @@ function createInterest(req, res, next) {
         .then((result) => {
           res.body = result.toJSON();
           return next();
-        })
+        });
     })
     .catch((error) => next(error));
 }
@@ -45,7 +45,7 @@ function updateRecruiterInterest(req, res, next) {
 router.use(bodyParser.json());
 router.use(middleware.auth);
 
-router.get('/interest/all', middleware.permission(roles.PROFESSIONALS),  getRecruitersInterests);
+router.get('/interest/all', middleware.permission(roles.PROFESSIONALS), getRecruitersInterests);
 router.post('/interest', middleware.request(requests.RecruiterInterestRequest), middleware.permission(roles.PROFESSIONALS), createInterest);
 router.put('/interest/:id(\\d+)', middleware.request(requests.UpdateRecruiterInterestRequest), middleware.permission(roles.PROFESSIONALS), updateRecruiterInterest);
 

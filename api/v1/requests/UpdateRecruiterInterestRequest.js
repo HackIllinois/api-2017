@@ -1,10 +1,10 @@
 const Request = require('./Request');
 
 const bodyRequired = [];
-const bodyAllowed = [ 'comments', 'favorite']
+const bodyAllowed = ['comments', 'favorite'];
 const bodyValidations = {
   'comments': ['string', 'maxLength:255'],
-  'favorite': ['boolean']
+  'favorite': [ 'boolean' ]
 };
 
 function UpdateRecruiterInterestRequest(headers, body) {
@@ -12,7 +12,7 @@ function UpdateRecruiterInterestRequest(headers, body) {
 
   this.bodyRequired = bodyRequired;
   this.bodyValidations = bodyValidations;
-  this.bodyAllowed = bodyAllowed
+  this.bodyAllowed = bodyAllowed;
 }
 
 UpdateRecruiterInterestRequest.prototype = Object.create(Request.prototype);
