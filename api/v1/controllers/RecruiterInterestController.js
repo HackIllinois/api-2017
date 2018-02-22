@@ -34,7 +34,7 @@ function getRecruitersInterests(req, res, next) {
 
 function updateRecruiterInterest(req, res, next) {
   services.RecruiterInterestService
-    .updateInterest(req.body.appId, req.body.comments, req.body.favorite)
+    .updateInterest(req.params.id, req.body.comments, req.body.favorite)
     .then((result) => {
       res.body = result.toJSON();
       return next();
@@ -46,8 +46,8 @@ router.use(bodyParser.json());
 router.use(middleware.auth);
 
 router.get('/', middleware.permission(roles.PROFESSIONALS),  getRecruitersInterests);
-router.post('/apply', middleware.request(requests.RecruiterInterestRequest), middleware.permission(roles.PROFESSIONALS), createInterest);
-router.put('/update', middleware.request(requests.RecruiterInterestUpdateRequest), middleware.permission(roles.PROFESSIONALS), updateRecruiterInterest);
+router.post('/', middleware.request(requests.RecruiterInterestRequest), middleware.permission(roles.PROFESSIONALS), createInterest);
+router.put('/:id(\\d+)', middleware.request(requests.UpdateRecruiterInterestRequest), middleware.permission(roles.PROFESSIONALS), updateRecruiterInterest);
 
 router.use(middleware.response);
 router.use(middleware.errors);

@@ -29,7 +29,10 @@ RecruiterInterest.findByAttendeeId = (id) => RecruiterInterest.where({
 
 RecruiterInterest.updateInterest = (appId, comments, favorite) => RecruiterInterest
     .where({app_id: appId})
-    .save({comments:comments,favorite:favorite},{patch:true});
-
+    .fetch()
+    .then((result) => {
+      result.set({ comments: comments, favorite: favorite });
+      return result.save({ app_id: appId }, { method:'update'});
+    });
 
 module.exports = RecruiterInterest;
