@@ -2,7 +2,7 @@
 
 ---
 
-**POST /v1/recruiters** <br />
+**POST /v1/recruiter/interest** <br />
 Creates a new recruiter interest
 
 Headers <br />
@@ -20,7 +20,7 @@ Request Parameters <br />
 | ---------------- | --------------------- | --------- |
 | `attendeeUserId` | The attendee's user id | Yes |
 | `comments` | a string of length up to 255 characters | No |
-| `favorite` | a natural number | No |
+| `favorite` | a boolean | No |
 
 Request
 ```
@@ -53,7 +53,7 @@ Errors: <br>
 
 ---
 
-**GET /v1/recruiters/** <br />
+**GET /v1/recruiter/interest/all** <br />
 Retrieve a project by ID
 
 Headers <br />
@@ -91,7 +91,7 @@ Errors: <br>
 
 ---
 
-**PUT /v1/recruiters/{:id}** <br />
+**PUT /v1/recruiter/interest/{:id}** <br />
 Updates an existing project with new attributes
 
 Headers <br />
@@ -109,7 +109,7 @@ Request Parameters <br />
 | ---------------- | --------------------- | --------- |
 | `id` | the id of the project to update | Yes |
 | `comments` | a string of length up to 255 characters | No |
-| `favorite` | a natural number | No |
+| `favorite` | a boolean | No |
 
 Request
 ```
