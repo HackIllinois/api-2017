@@ -5,17 +5,10 @@ const RecruiterInterest = Model.extend({
   hasTimestamps: ['created', 'updated'],
   idAttribute: 'app_id',
   validations: {
-<<<<<<< HEAD
-    recruiterId: ['required','integer'],
-    attendeeId: ['required','integer'],
-    comments: ['string'],
-    favorite: ['integer']
-=======
     recruiterId: ['required', 'integer'],
     attendeeId: ['required', 'integer'],
     comments: [ 'string' ],
     favorite: [ 'boolean' ]
->>>>>>> staging
   }
 });
 
@@ -39,11 +32,7 @@ RecruiterInterest.updateInterest = (appId, comments, favorite) => RecruiterInter
     .fetch()
     .then((result) => {
       result.set({ comments: comments, favorite: favorite });
-<<<<<<< HEAD
-      return result.save({ app_id: appId }, { method:'update'});
-=======
       return result.save({ app_id: appId }, { method: 'update'});
->>>>>>> staging
     });
 
 module.exports = RecruiterInterest;

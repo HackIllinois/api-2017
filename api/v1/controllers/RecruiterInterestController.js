@@ -46,15 +46,9 @@ function updateRecruiterInterest(req, res, next) {
 router.use(bodyParser.json());
 router.use(middleware.auth);
 
-<<<<<<< HEAD
-router.get('/', middleware.permission(roles.PROFESSIONALS),  getRecruitersInterests);
-router.post('/', middleware.request(requests.RecruiterInterestRequest), middleware.permission(roles.PROFESSIONALS), createInterest);
-router.put('/:id(\\d+)', middleware.request(requests.UpdateRecruiterInterestRequest), middleware.permission(roles.PROFESSIONALS), updateRecruiterInterest);
-=======
 router.get('/interest/all', middleware.permission(roles.PROFESSIONALS), getRecruitersInterests);
 router.post('/interest', middleware.request(requests.RecruiterInterestRequest), middleware.permission(roles.PROFESSIONALS), createInterest);
 router.put('/interest/:id(\\d+)', middleware.request(requests.UpdateRecruiterInterestRequest), middleware.permission(roles.PROFESSIONALS), updateRecruiterInterest);
->>>>>>> staging
 
 router.use(middleware.response);
 router.use(middleware.errors);
