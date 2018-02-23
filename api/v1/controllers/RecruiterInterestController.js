@@ -17,9 +17,10 @@ function createInterest(req, res, next) {
         .then((result) => {
           res.body = result.toJSON();
           return next();
-        });
+        })
+        .catch((error) => next(error));
     })
-    .catch((error) => next(error));
+
 }
 
 function getRecruitersInterests(req, res, next) {
