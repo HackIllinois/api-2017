@@ -1,15 +1,11 @@
 const Request = require('./Request');
 
-const bodyRequired = ['attendeeUserId'];
+const bodyRequired = [ 'attendeeUserId' ];
 const bodyAllowed = ['comments', 'favorite'];
 const bodyValidations = {
   'attendeeUserId': ['required', 'integer'],
   'comments': ['string', 'maxLength:255'],
-<<<<<<< HEAD
-  'favorite': ['natural']
-=======
   'favorite': [ 'boolean' ]
->>>>>>> staging
 };
 
 function RecruiterInterestRequest(headers, body) {
