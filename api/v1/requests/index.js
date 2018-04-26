@@ -21,5 +21,6 @@ module.exports = {
   CheckInRequest: require('./CheckInRequest'),
   RSVPRequest: require('./RSVPRequest'),
   UniversalTrackingRequest: require('./UniversalTrackingRequest'),
+  RoleAssignmentRequest: require('./RoleAssignmentRequest'),
   UserContactInfoRequest: require('./UserContactInfoRequest')
 };

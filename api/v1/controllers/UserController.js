@@ -7,6 +7,7 @@ const middleware = require('../middleware');
 const requests = require('../requests');
 const scopes = require('../utils/scopes');
 const roles = require('../utils/roles');
+const errors = require('../errors');
 
 const router = require('express').Router();
 
@@ -117,7 +118,6 @@ function requestPasswordReset(req, res, next) {
     })
     .catch((error) => next(error));
 }
-
 function updateContactInfo(req, res, next) {
   services.UserService.updateContactInfo(req.user, req.body.newEmail)
   .then((result) => {
@@ -126,6 +126,32 @@ function updateContactInfo(req, res, next) {
     return next();
   })
   .catch((error) => next(error));
+}
+
+function assignNewRole(req, res, next) {
+  services.UserService
+    .findUserById(req.body.id)
+    .then((assignedUser) => {
+      if (services.UserService
+        .canAssign(req.user, assignedUser, req.body.role, req.originUser)) {
+
+        services.UserService.addRole(assignedUser, req.body.role, true)
+          .then(() => {
+            services.UserService
+              .findUserById(assignedUser.id)
+              .then((updatedUser) => {
+                let updatedUserJson = updatedUser.toJSON();
+                updatedUserJson.roles = updatedUser.related("roles").toJSON();
+                res.body = updatedUserJson;
+                return next();
+              })
+          })
+
+      } else {
+        return next(new errors.UnauthorizedError());
+      }
+    })
+    .catch((error) => next(error));
 }
 
 router.use(bodyParser.json());
@@ -139,6 +165,8 @@ router.post('/reset', middleware.request(requests.ResetTokenRequest), requestPas
 router.get('/', middleware.permission(roles.NONE, isAuthenticated), getAuthenticatedUser);
 router.get('/:id(\\d+)', middleware.permission(roles.HOSTS, isRequester), getUser);
 router.get('/email/:email', middleware.permission(roles.HOSTS), getUserByEmail);
+router.post('/assign', middleware.request(requests.RoleAssignmentRequest),
+ middleware.permission(roles.ORGANIZERS), assignNewRole);
 router.get('/github/:handle', middleware.permission(roles.HOSTS), getUserByGithubHandle);
 router.put('/contactinfo', middleware.request(requests.UserContactInfoRequest),
   middleware.permission(roles.NONE, isAuthenticated), updateContactInfo);

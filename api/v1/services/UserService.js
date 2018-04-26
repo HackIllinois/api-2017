@@ -3,8 +3,22 @@ const _Promise = require('bluebird');
 const _ = require('lodash');
 
 const User = require('../models/User');
+const UserRole = require('../models/UserRole');
 const errors = require('../errors');
 const utils = require('../utils');
+const roles = require('../utils').roles;
+
+const ROLE_VALUE_MAP = {"ADMIN":2, "STAFF":1, "SPONSOR":0, "MENTOR":0, "VOLUNTEER":0, "ATTENDEE":0};
+
+function maxRole(userRoles) {
+  let max = 0;
+  userRoles.forEach((roleObj) => {
+    if(ROLE_VALUE_MAP[roleObj.role] > max) {
+      max = ROLE_VALUE_MAP[roleObj.role];
+    }
+  });
+  return max;
+}
 
 /**
  * Creates a user of the specified role. When a password is not specified, a
@@ -134,6 +148,37 @@ module.exports.verifyPassword = (user, password) => user
 module.exports.resetPassword = (user, password) => user
     .setPassword(password)
     .then((updated) => updated.save());
+
+/**
+ * Adds role to a user
+ * @param  {User} user assigning new role
+ * @param  {User} assignedUser the assigned User's model
+ * @param  {Role} newRole the new role
+ * @param  {User} originUser the original user to determine if impersonated
+ * @return {Boolean} whether user can assign new role to assignedUser
+ */
+module.exports.canAssign = (user, assignedUser, newRole, originUser) => {
+  let maxUserRole = maxRole(user.related('roles').toJSON());
+  let maxAssigneeRole = maxRole(assignedUser.related('roles').toJSON());
+
+  return maxUserRole > ROLE_VALUE_MAP[newRole]
+      && maxUserRole > maxAssigneeRole
+      && _.isUndefined(originUser)
+      && (maxAssigneeRole > 0 || assignedUser.hasRole(roles.VOLUNTEER));
+};
+
+/**
+ * Adds role to a user
+ * @param  {User} user a User model
+ * @param  {String} role a role to assign to the user
+ * @param {Boolean} active a boolean whether new role should be active
+ * @return {UserRole} the updatedUserRole
+ */
+module.exports.addRole = (user, role, active) => UserRole
+    .addRole(user, role, active)
+    .then((updatedUser) => {
+      return updatedUser;
+    });
 
 module.exports.updateContactInfo = (user, newEmail) => {
   if(!_.isNull(user.get('password'))) {
